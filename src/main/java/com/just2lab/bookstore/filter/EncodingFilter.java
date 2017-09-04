@@ -1,5 +1,10 @@
 package com.just2lab.bookstore.filter;
 
+import com.just2lab.bookstore.servlet.RegisterServlet;
+import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -14,23 +19,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- * Í¨ÓÃ½â¾ö get ºÍ postÂÒÂë¹ıÂËÆ÷
+ * é€šç”¨è§£å†³ get å’Œ postä¹±ç è¿‡æ»¤å™¨
  * 
  * 
  * 
  */
 public class EncodingFilter implements Filter {
 
+	private static final Logger logger = LoggerFactory.getLogger(EncodingFilter.class);
+
 	public void destroy() {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		// ´¦ÀíÇëÇóÂÒÂë
+		// å¤„ç†è¯·æ±‚ä¹±ç 
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletRequest myRequest = new MyRequest(httpServletRequest);
-
-		// ´¦ÀíÏìÓ¦ÂÒÂë
+		// å¤„ç†å“åº”ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
 
 		chain.doFilter(myRequest, response);
@@ -41,7 +47,7 @@ public class EncodingFilter implements Filter {
 
 }
 
-// ×Ô¶¨Òårequest¶ÔÏó
+// è‡ªå®šä¹‰requestå¯¹è±¡
 class MyRequest extends HttpServletRequestWrapper {
 
 	private HttpServletRequest request;
@@ -49,34 +55,34 @@ class MyRequest extends HttpServletRequestWrapper {
 	private boolean hasEncode;
 
 	public MyRequest(HttpServletRequest request) {
-		super(request);// super±ØĞëĞ´
+		super(request);// superå¿…é¡»å†™
 		this.request = request;
 	}
 
-	// ¶ÔĞèÒªÔöÇ¿·½·¨ ½øĞĞ¸²¸Ç
+	// å¯¹éœ€è¦å¢å¼ºæ–¹æ³• è¿›è¡Œè¦†ç›–
 	@Override
 	public Map getParameterMap() {
-		// ÏÈ»ñµÃÇëÇó·½Ê½
+		// å…ˆè·å¾—è¯·æ±‚æ–¹å¼
 		String method = request.getMethod();
 		if (method.equalsIgnoreCase("post")) {
-			// postÇëÇó
+			// postè¯·æ±‚
 			try {
-				// ´¦ÀípostÂÒÂë
+				// å¤„ç†postä¹±ç 
 				request.setCharacterEncoding("utf-8");
 				return request.getParameterMap();
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		} else if (method.equalsIgnoreCase("get")) {
-			// getÇëÇó
+			// getè¯·æ±‚
 			Map<String, String[]> parameterMap = request.getParameterMap();
-			if (!hasEncode) { // È·±£getÊÖ¶¯±àÂëÂß¼­Ö»ÔËĞĞÒ»´Î
+			if (!hasEncode) { // ç¡®ä¿getæ‰‹åŠ¨ç¼–ç é€»è¾‘åªè¿è¡Œä¸€æ¬¡
 				for (String parameterName : parameterMap.keySet()) {
 					String[] values = parameterMap.get(parameterName);
 					if (values != null) {
 						for (int i = 0; i < values.length; i++) {
 							try {
-								// ´¦ÀígetÂÒÂë
+								// å¤„ç†getä¹±ç 
 								values[i] = new String(values[i]
 										.getBytes("ISO-8859-1"), "utf-8");
 							} catch (UnsupportedEncodingException e) {
@@ -100,7 +106,7 @@ class MyRequest extends HttpServletRequestWrapper {
 		if (values == null) {
 			return null;
 		}
-		return values[0]; // È¡»Ø²ÎÊıµÄµÚÒ»¸öÖµ
+		return values[0]; // å–å›å‚æ•°çš„ç¬¬ä¸€ä¸ªå€¼
 	}
 
 	@Override
