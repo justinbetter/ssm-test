@@ -1,8 +1,5 @@
 package com.just2lab.bookstore.servlet;
 
-import org.apache.commons.logging.LogFactory;
-
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
