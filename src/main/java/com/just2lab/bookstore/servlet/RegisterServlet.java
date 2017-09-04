@@ -1,5 +1,7 @@
 package com.just2lab.bookstore.servlet;
 
+import org.apache.commons.logging.LogFactory;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,11 +11,11 @@ import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
 
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
-
-
 
     }
 

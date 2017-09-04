@@ -1,5 +1,8 @@
 package com.just2lab.bookstore.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -28,11 +31,14 @@ public class CheckImgServlet extends HttpServlet {
 
 	// 集合中保存所有成语
 	private List<String> words = new ArrayList<String>();
+	private static final Logger logger = LoggerFactory.getLogger(CheckImgServlet.class);
 
 	@Override
 	public void init() throws ServletException {
 		// 初始化阶段，读取new_words.txt
 		// web工程中读取 文件，必须使用绝对磁盘路径
+		logger.debug("init ");
+
 		String path = getServletContext().getRealPath("/WEB-INF/new_words.txt");
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
@@ -79,7 +85,7 @@ public class CheckImgServlet extends HttpServlet {
 		Random random = new Random();// 生成随机数
 		int index = random.nextInt(words.size());
 		String word = words.get(index);// 获得成语
-		log("word: " + word);
+		logger.debug("word: " + word);
 		// 定义x坐标
 		int x = 10;
 		for (int i = 0; i < word.length(); i++) {
