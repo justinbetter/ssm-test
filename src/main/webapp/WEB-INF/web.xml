@@ -1,7 +1,44 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>Archetype Created Web Application</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.just2lab.bookstore.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <servlet-name>/*</servlet-name>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>registerServlet</servlet-name>
+        <servlet-class>com.just2lab.bookstore.servlet.RegisterServlet</servlet-class>
+
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>registerServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>checkImageServlet</servlet-name>
+        <servlet-class>com.just2lab.bookstore.servlet.CheckImgServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>checkImageServlet</servlet-name>
+        <url-pattern>/imageCode</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
