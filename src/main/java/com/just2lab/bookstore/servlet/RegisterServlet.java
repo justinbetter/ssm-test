@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.UUID;
 
 public class RegisterServlet extends HttpServlet {
@@ -37,14 +38,14 @@ public class RegisterServlet extends HttpServlet {
         User user = new User();
         try {
             BeanUtils.populate(user, req.getParameterMap());
-            logger.debug(String.valueOf(user));
+            logger.info(String.valueOf(user));
             user.setActiveCode(UUID.randomUUID().toString());//手动设置激活码
             //dao存入数据库
             UserService userService = new UserService();
             userService.register(user);
             req.getSession().setAttribute("user",user);
             //跳转成功页面
-            logger.debug("跳转成功："+user.getGender());
+            logger.info("跳转成功："+user.getGender());
             req.getRequestDispatcher("/registersuccess.jsp").forward(req, resp);
 
         } catch (UserException e1) {
